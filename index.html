@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FocusFlow Assist</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-bg"></div>
+
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">Smart vardagsstruktur</p>
+      <h1>FocusFlow Assist</h1>
+      <p class="subtitle">Veckoplanering, rutiner, pauser, checklistor, söndagsförberedelse, inköpslistor och möten med restidsstöd.</p>
+    </div>
+    <button id="themeToggle" class="ghost-button" type="button">Växla tema</button>
+  </header>
+
+  <main class="layout">
+    <aside class="side-panel glass-card">
+      <section class="today-panel">
+        <p class="section-kicker">Just nu</p>
+        <h2 id="currentTaskTitle">Laddar...</h2>
+        <p id="currentTaskMeta" class="muted"></p>
+        <div class="action-row">
+          <button id="completeCurrentBtn" type="button">Markera klar</button>
+          <button id="starterHelpBtn" class="secondary-button" type="button">Hjälp mig börja</button>
+        </div>
+      </section>
+
+      <section class="focus-box">
+        <p class="section-kicker">Dagens 3 viktigaste</p>
+        <ol id="topThreeList" class="top-three"></ol>
+      </section>
+
+      <section class="focus-box">
+        <p class="section-kicker">Energi</p>
+        <label for="energySelect" class="label-small">Hur känns energin just nu?</label>
+        <select id="energySelect">
+          <option value="low">Låg energi</option>
+          <option value="normal" selected>Normal energi</option>
+          <option value="high">Bra energi</option>
+        </select>
+        <p id="energyAdvice" class="muted"></p>
+      </section>
+    </aside>
+
+    <section class="content-panel">
+      <nav class="tabs glass-card" aria-label="Appvyer">
+        <button class="tab-button active" data-view="today" type="button">Idag</button>
+        <button class="tab-button" data-view="week" type="button">Vecka</button>
+        <button class="tab-button" data-view="add" type="button">Lägg till</button>
+        <button class="tab-button" data-view="routines" type="button">Rutiner</button>
+      </nav>
+
+      <section id="todayView" class="view active-view"></section>
+      <section id="weekView" class="view"></section>
+
+      <section id="addView" class="view glass-card form-card">
+        <div class="view-header">
+          <div>
+            <p class="section-kicker">Ny planering</p>
+            <h2>Lägg till uppgift</h2>
+            <p class="muted">Skapa vardagsuppgifter, pauser, inköpslistor, möten och hushållsblock.</p>
+          </div>
+          <button id="resetDemoBtn" class="danger-ghost" type="button">Återställ demo</button>
+        </div>
+
+        <form id="taskForm" class="task-form">
+          <div class="form-grid">
+            <label>Titel<input id="taskTitle" type="text" placeholder="Ex. Handla mat" required /></label>
+            <label>Dag<select id="taskDay"><option value="monday">Måndag</option><option value="tuesday">Tisdag</option><option value="wednesday">Onsdag</option><option value="thursday">Torsdag</option><option value="friday">Fredag</option><option value="saturday">Lördag</option><option value="sunday">Söndag</option></select></label>
+            <label>Starttid<input id="taskStart" type="time" value="09:00" /></label>
+            <label>Tid i minuter<input id="taskDuration" type="number" min="0" value="30" /></label>
+            <label>Typ<select id="taskType"><option value="task">Vanlig uppgift</option><option value="routine">Rutin</option><option value="break">Break / paus</option><option value="shopping">Handling / inköpslista</option><option value="meeting">Möte med restid</option><option value="household">Hushåll</option><option value="admin">Admin / papper</option><option value="family">Barn / familj</option></select></label>
+            <label>Prioritet<select id="taskPriority"><option value="low">Låg</option><option value="medium" selected>Medium</option><option value="high">Hög</option></select></label>
+          </div>
+
+          <label>Beskrivning<textarea id="taskDescription" rows="3" placeholder="Skriv kort vad uppgiften innebär..."></textarea></label>
+          <label>Checklista / inköpslista / steg, en rad per punkt<textarea id="taskChecklist" rows="5" placeholder="Mjölk\nBröd\nPacka väskan"></textarea></label>
+
+          <div class="meeting-fields">
+            <h3>Mötesstöd</h3>
+            <div class="form-grid">
+              <label>Adress<input id="taskAddress" type="text" placeholder="Ex. Storgatan 12" /></label>
+              <label>Färdsätt<select id="taskTravelMode"><option value="car">Bil</option><option value="bus">Buss</option><option value="walk">Gång</option></select></label>
+              <label>Restid i minuter<input id="taskTravelTime" type="number" min="0" value="0" /></label>
+              <label>Buffert i minuter<input id="taskBuffer" type="number" min="0" value="10" /></label>
+            </div>
+          </div>
+
+          <button type="submit">Spara uppgift</button>
+        </form>
+      </section>
+
+      <section id="routinesView" class="view"></section>
+    </section>
+  </main>
+
+  <dialog id="starterDialog" class="starter-dialog">
+    <h2>Hjälp mig börja</h2>
+    <p id="starterText"></p>
+    <button id="closeStarterDialog" type="button">Jag börjar nu</button>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
